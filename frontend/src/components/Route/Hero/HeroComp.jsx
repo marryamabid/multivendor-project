@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Hero = () => {
+const HeroComp = () => {
   return (
     <div
       className="relative min-h-[70vh] 800px:min-h-[80vh] w-full bg-cover bg-center bg-no-repeat flex items-center"
@@ -31,4 +31,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default HeroComp;
