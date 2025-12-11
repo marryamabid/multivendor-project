@@ -1,7 +1,56 @@
+import React from "react";
+import styles from "../../../styles/style";
+import { brandingData } from "../../../static/data";
+import { categoriesData } from "../../../static/data";
+import { useNavigate } from "react-router-dom";
 const Categories = () => {
-  return;
-  <>
-    <div></div>
-  </>;
+  const navigate = useNavigate();
+  return (
+    <>
+      <div className={`${styles.section} hidden sm:block`}>
+        <div
+          className={`branding my-12 flex justify-between w-full shadow-sm bg-white p-5 rounded-md`}
+        >
+          {brandingData &&
+            brandingData.map((item, index) => (
+              <div key={index} className="flex items-start">
+                {item.icon}
+                <div className="px-3">
+                  <h3 className="font-semibold text-sm md:text-base">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs md:text-sm">{item.Description}</p>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+      <div className={`${styles.section} bg-white p-12 mb-12 rounded-lg`}>
+        <div className="grid grid-cols-1 gap-[5px] md:grid-cols-2 md:gap-[10px] lg:grid-cols-4 lg:gap-[20px] xl:grid-cols-5 xl:gap-[30px]">
+          {categoriesData &&
+            categoriesData.map((i, index) => {
+              const handleSubmit = () => {
+                navigate(`/products?category=${i.title}`);
+                console.log(title);
+              };
+              return (
+                <div
+                  className="w-full h-[100px] flex items-center justify-between cursor-pointer overflow-hidden"
+                  key={i.id}
+                  onClick={() => handleSubmit(i)}
+                >
+                  <h5 className={`text-[18px] leading-[1.3]`}>{i.title}</h5>
+                  <img
+                    src={i.image_Url}
+                    className="w-[120px] object-cover"
+                    alt=""
+                  />
+                </div>
+              );
+            })}
+        </div>
+      </div>
+    </>
+  );
 };
 export default Categories;

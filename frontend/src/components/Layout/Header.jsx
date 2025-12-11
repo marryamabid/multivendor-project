@@ -14,7 +14,11 @@ import { IoIosArrowDown } from "react-icons/io";
 import { categoriesData } from "../../static/data.jsx";
 import DropDown from "./DropDown.jsx";
 import Navbar from "./Navbar.jsx";
+import { useSelector } from "react-redux";
+import { backend_url } from "../../server.js";
 export const Header = ({ activeHeading }) => {
+  const { isAuthenticated, user } = useSelector((state) => state.user);
+  console.log(user);
   const [searchData, setSearchData] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [active, setActive] = useState(false);
@@ -92,22 +96,25 @@ export const Header = ({ activeHeading }) => {
           active ? "sticky top-0 z-10 shadow-sm" : ""
         } transition flex items-center justify-between w-full bg-[#3321c8] h-[70px] px-4`}
       >
-        {/* Left: Categories */}
-        <div className="relative flex items-center w-[270px] h-[60px]">
-          <BiMenuAltLeft size={30} className="absolute left-2" />
-          <button className="flex-1 h-full pl-10 pr-8 bg-white rounded-t-md text-lg font-medium flex items-center justify-between">
-            All Categories
-            <IoIosArrowDown
-              onClick={() => setDropDown(!dropDown)}
-              className="cursor-pointer"
-            />
-          </button>
-          {dropDown && (
-            <DropDown
-              categoriesData={categoriesData}
-              setDropDown={setDropDown}
-            />
-          )}
+        {/* Categories */}
+
+        <div onClick={() => setDropDown(!dropDown)}>
+          <div className="relative flex items-center w-[270px] h-[60px]">
+            <BiMenuAltLeft size={30} className="absolute left-2" />
+            <button className="flex-1 h-full pl-10 pr-8 bg-white rounded-t-md text-lg font-medium flex items-center justify-between">
+              All Categories
+              <IoIosArrowDown
+                onClick={() => setDropDown(!dropDown)}
+                className="cursor-pointer"
+              />
+            </button>
+            {dropDown && (
+              <DropDown
+                categoriesData={categoriesData}
+                setDropDown={setDropDown}
+              />
+            )}
+          </div>
         </div>
 
         {/* Center: Navbar */}
@@ -134,8 +141,30 @@ export const Header = ({ activeHeading }) => {
           </div>
 
           {/* Profile */}
-          <div className="relative cursor-pointer">
-            <CgProfile size={30} color="white" />
+          <div className="flex w-full justify-center">
+            {isAuthenticated ? (
+              <div>
+                <Link to="/profile">
+                  <img
+                    src={`${backend_url}/${user.avatar}`}
+                    alt=""
+                    className="w-[60px] h-[60px] rounded-full border-[3px] border-[#0eae88]"
+                  />
+                </Link>
+              </div>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="text-[18px] pr-[10px] text-[#000000b7]"
+                >
+                  Login /
+                </Link>
+                <Link to="/sign-up" className="text-[18px] text-[#000000b7]">
+                  Sign up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
