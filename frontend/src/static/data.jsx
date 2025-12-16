@@ -267,8 +267,12 @@ export const productData = [
     category: "Computers and Laptops",
     name: "MacBook Pro M2 256GB SSD, 8GB RAM, Space Gray",
     description:
-      "High-performance MacBook Pro with M2 chipset, 256GB SSD, 8GB RAM, and 1-year Apple warranty.",
+      "High-performance MacBook Pro with M2 chipset, 256GB SSD, 8GB RAM, and 1-year Apple warrantyHigh-performance MacBook Pro with M2 chipset, 256GB SSD, 8GB RAM, and 1-year Apple warranty.High-performance MacBook Pro with M2 chipset, 256GB SSD, 8GB RAM, and 1-year Apple warranty.High-performance MacBook Pro with M2 chipset, 256GB SSD, 8GB RAM, and 1-year Apple warranty.",
     image_Url: [
+      {
+        public_id: "macbook1",
+        url: "https://www.istorebangladesh.com/images/thumbs/0000286_macbook-pro-m1_550.png",
+      },
       {
         public_id: "macbook1",
         url: "https://www.istorebangladesh.com/images/thumbs/0000286_macbook-pro-m1_550.png",
@@ -293,8 +297,12 @@ export const productData = [
     category: "Mobile and Tablets",
     name: "iPhone 14 Pro Max 256GB, 8GB RAM, Silver",
     description:
-      "Latest iPhone 14 Pro Max with 256GB storage, 8GB RAM, and sleek silver color.",
+      "Latest iPhone 14 Pro Max with 256GB storage, 8GB RAM, and sleek silver color.Latest iPhone 14 Pro Max with 256GB storage, 8GB RAM, and sleek silver color.Latest iPhone 14 Pro Max with 256GB storage, 8GB RAM, and sleek silver color.Latest iPhone 14 Pro Max with 256GB storage, 8GB RAM, and sleek silver color.",
     image_Url: [
+      {
+        public_id: "iphone14",
+        url: "https://m.media-amazon.com/images/I/31Vle5fVdaL.jpg",
+      },
       {
         public_id: "iphone14",
         url: "https://m.media-amazon.com/images/I/31Vle5fVdaL.jpg",
@@ -319,8 +327,12 @@ export const productData = [
     category: "Music and Gaming",
     name: "Gaming Headphone Asus",
     description:
-      "Asus gaming headphone with multiple colors, premium sound, and free delivery.",
+      "Asus gaming headphone with multiple colors, premium sound, and free delivery.Asus gaming headphone with multiple colors, premium sound, and free deliveryAsus gaming headphone with multiple colors, premium sound, and free deliveryAsus gaming headphone with multiple colors, premium sound, and free delivery.",
     image_Url: [
+      {
+        public_id: "asus_headphone1",
+        url: "https://www.startech.com.bd/image/cache/catalog/headphone/havit/h763d/h763d-02-500x500.jpg",
+      },
       {
         public_id: "asus_headphone1",
         url: "https://www.startech.com.bd/image/cache/catalog/headphone/havit/h763d/h763d-02-500x500.jpg",
@@ -346,8 +358,12 @@ export const productData = [
     category: "Others",
     name: "Fashionable Men's Watch 2023",
     description:
-      "Stylish new fashion watch for men with multiple color options.",
+      "Stylish new fashion watch for men with multiple color options.Stylish new fashion watch for men with multiple color options.Stylish new fashion watch for men with multiple color options.Stylish new fashion watch for men with multiple color options.Stylish new fashion watch for men with multiple color options.Stylish new fashion watch for men with multiple color options.",
     image_Url: [
+      {
+        public_id: "watch1",
+        url: "https://i0.wp.com/eccocibd.com/wp-content/uploads/2022/01/1802NL02_1.png?fit=550%2C550&ssl=1",
+      },
       {
         public_id: "watch1",
         url: "https://i0.wp.com/eccocibd.com/wp-content/uploads/2022/01/1802NL02_1.png?fit=550%2C550&ssl=1",
@@ -371,8 +387,13 @@ export const productData = [
     id: 5,
     category: "Shoes",
     name: "Trend Shoes for Gents",
-    description: "Latest fashion shoes for men, available in all sizes.",
+    description:
+      "Latest fashion shoes for men, available in all sizes.Latest fashion shoes for men, available in all sizes.Latest fashion shoes for men, available in all sizes.Latest fashion shoes for men, available in all sizes.",
     image_Url: [
+      {
+        public_id: "shoes1",
+        url: "https://mirzacdns3.s3.ap-south-1.amazonaws.com/cache/catalog/RLV0015/2-800x800.jpg",
+      },
       {
         public_id: "shoes1",
         url: "https://mirzacdns3.s3.ap-south-1.amazonaws.com/cache/catalog/RLV0015/2-800x800.jpg",

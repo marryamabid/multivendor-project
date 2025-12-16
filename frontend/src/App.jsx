@@ -9,6 +9,7 @@ import {
   BestSellingPage,
   EventsPage,
   FAQPage,
+  ProductDetailsPage,
 } from "./Routes.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -52,6 +53,10 @@ function App() {
     {
       path: "/faq",
       element: <FAQPage />,
+    },
+    {
+      path: "/product/:name",
+      element: <ProductDetailsPage />,
     },
   ]);
   return (

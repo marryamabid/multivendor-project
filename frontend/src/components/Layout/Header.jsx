@@ -7,7 +7,7 @@ import {
   AiOutlineSearch,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-import { CgProfile } from "react-icons/cg";
+
 import { IoIosArrowForward } from "react-icons/io";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { IoIosArrowDown } from "react-icons/io";
@@ -16,6 +16,9 @@ import DropDown from "./DropDown.jsx";
 import Navbar from "./Navbar.jsx";
 import { useSelector } from "react-redux";
 import { backend_url } from "../../server.js";
+import Cart from "../Cart/Cart.jsx";
+import WhishList from "../WhishList/WhishList.JSX";
+
 export const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   console.log(user);
@@ -23,6 +26,8 @@ export const Header = ({ activeHeading }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [active, setActive] = useState(false);
   const [dropDown, setDropDown] = useState(false);
+  const [openCart, setOpenCart] = useState(false);
+  const [openWhishList, setOpenWhishList] = useState(false);
   const handleSearchChange = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
@@ -126,7 +131,11 @@ export const Header = ({ activeHeading }) => {
         <div className="flex items-center space-x-6">
           {/* Heart */}
           <div className="relative cursor-pointer">
-            <AiOutlineHeart size={30} color="white" />
+            <AiOutlineHeart
+              size={30}
+              color="white"
+              onClick={() => setOpenWhishList(true)}
+            />
             <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 text-white text-[12px] rounded-full flex items-center justify-center">
               0
             </span>
@@ -134,7 +143,11 @@ export const Header = ({ activeHeading }) => {
 
           {/* Cart */}
           <div className="relative cursor-pointer">
-            <AiOutlineShoppingCart size={30} color="white" />
+            <AiOutlineShoppingCart
+              size={30}
+              color="white"
+              onClick={() => setOpenCart(true)}
+            />
             <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 text-white text-[12px] rounded-full flex items-center justify-center">
               1
             </span>
@@ -167,6 +180,12 @@ export const Header = ({ activeHeading }) => {
             )}
           </div>
         </div>
+        {/* Cart popup  */}
+        {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
+        {/* Wishlist popup  */}
+        {openWhishList ? (
+          <WhishList setOpenWhishList={setOpenWhishList} />
+        ) : null}
       </div>
     </>
   );
