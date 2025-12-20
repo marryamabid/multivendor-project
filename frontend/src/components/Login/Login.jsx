@@ -22,6 +22,7 @@ export const Login = () => {
         { withCredentials: true }
       );
       toast.success("Login Successfull!");
+      window.location.reload(true);
       console.log(res.data);
       navigate("/");
     } catch (error) {
