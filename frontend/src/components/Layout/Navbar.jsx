@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = ({ active }) => {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center ">
       {navItems &&
         navItems.map((item, index) => (
           <div key={index} className="flex">

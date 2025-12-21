@@ -1,9 +1,16 @@
 import { useSelector } from "react-redux";
 import { backend_url } from "../../server";
-import { AiOutlineCamera } from "react-icons/ai";
+import {
+  AiOutlineArrowRight,
+  AiOutlineCamera,
+  AiOutlineDelete,
+} from "react-icons/ai";
 import styles from "../../styles/style";
 import { useEffect, useState } from "react";
-
+import { MdOutlineTrackChanges } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { Button } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 const ProfileContent = ({ active }) => {
   const { user } = useSelector((state) => state.user);
   const [name, setName] = useState("");
@@ -141,10 +148,42 @@ const ProfileContent = ({ active }) => {
           <AllOrders />
         </>
       ) : null}
+      {active === 3 ? (
+        <>
+          <AllRefundOrders />
+        </>
+      ) : null}
+      {active === 5 ? (
+        <>
+          <AllTrackOrders />
+        </>
+      ) : null}
+      {active === 6 ? (
+        <>
+          <PaymentMethods />
+        </>
+      ) : null}
+      {active === 7 ? (
+        <>
+          <AddressMethod />
+        </>
+      ) : null}
     </div>
   );
 };
 const AllOrders = () => {
+  const orders = [
+    {
+      _id: "746vbn23k4n5j6h7g8f9e0d",
+      orderItems: [
+        {
+          name: "Iphone 14 pro max",
+        },
+      ],
+      totalPrice: 1200,
+      orderStatus: "processing",
+    },
+  ];
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
 
@@ -153,11 +192,8 @@ const AllOrders = () => {
       headerName: "Status",
       minWidth: 130,
       flex: 0.7,
-      cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
-          ? "greenColor"
-          : "redColor";
-      },
+      cellClassName: (params) =>
+        params.value === "Delivered" ? "greenColor" : "redColor",
     },
     {
       field: "itemsQty",
@@ -195,6 +231,260 @@ const AllOrders = () => {
       },
     },
   ];
-  return <div className="pl-8 pt-1">AllOrders</div>;
+  const row = [];
+  orders &&
+    orders.forEach((item) => {
+      row.push({
+        id: item._id,
+        itemsQty: item.orderItems.length,
+        total: "US$" + item.totalPrice,
+        status: item.orderStatus,
+      });
+    });
+  return (
+    <div className="pl-8 pt-1">
+      <DataGrid
+        rows={row}
+        columns={columns}
+        pageSize={10}
+        disableSelectionOnClick
+        autoHeight
+      />
+    </div>
+  );
+};
+const AllRefundOrders = () => {
+  const orders = [
+    {
+      _id: "746vbn23k4n5j6h7g8f9e0d",
+      orderItems: [
+        {
+          name: "Iphone 14 pro max",
+        },
+      ],
+      totalPrice: 1200,
+      orderStatus: "processing",
+    },
+  ];
+  const columns = [
+    { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
+
+    {
+      field: "status",
+      headerName: "Status",
+      minWidth: 130,
+      flex: 0.7,
+      cellClassName: (params) =>
+        params.value === "Delivered" ? "greenColor" : "redColor",
+    },
+    {
+      field: "itemsQty",
+      headerName: "Items Qty",
+      type: "number",
+      minWidth: 130,
+      flex: 0.7,
+    },
+
+    {
+      field: "total",
+      headerName: "Total",
+      type: "number",
+      minWidth: 130,
+      flex: 0.8,
+    },
+
+    {
+      field: " ",
+      flex: 1,
+      minWidth: 150,
+      headerName: "",
+      type: "number",
+      sortable: false,
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={`/user/order/${params.id}`}>
+              <Button>
+                <AiOutlineArrowRight size={20} />
+              </Button>
+            </Link>
+          </>
+        );
+      },
+    },
+  ];
+  const row = [];
+  orders &&
+    orders.forEach((item) => {
+      row.push({
+        id: item._id,
+        itemsQty: item.orderItems.length,
+        total: "US$" + item.totalPrice,
+        status: item.orderStatus,
+      });
+    });
+  return (
+    <div className="pl-8 pt-1">
+      <DataGrid
+        rows={row}
+        columns={columns}
+        pageSize={10}
+        disableSelectionOnClick
+        autoHeight
+      />
+    </div>
+  );
+};
+const AllTrackOrders = () => {
+  const orders = [
+    {
+      _id: "746vbn23k4n5j6h7g8f9e0d",
+      orderItems: [
+        {
+          name: "Iphone 14 pro max",
+        },
+      ],
+      totalPrice: 1200,
+      orderStatus: "processing",
+    },
+  ];
+  const columns = [
+    { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
+
+    {
+      field: "status",
+      headerName: "Status",
+      minWidth: 130,
+      flex: 0.7,
+      cellClassName: (params) =>
+        params.value === "Delivered" ? "greenColor" : "redColor",
+    },
+    {
+      field: "itemsQty",
+      headerName: "Items Qty",
+      type: "number",
+      minWidth: 130,
+      flex: 0.7,
+    },
+
+    {
+      field: "total",
+      headerName: "Total",
+      type: "number",
+      minWidth: 130,
+      flex: 0.8,
+    },
+
+    {
+      field: " ",
+      flex: 1,
+      minWidth: 150,
+      headerName: "",
+      type: "number",
+      sortable: false,
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={`/user/order/${params.id}`}>
+              <Button>
+                <MdOutlineTrackChanges size={20} />
+              </Button>
+            </Link>
+          </>
+        );
+      },
+    },
+  ];
+  const row = [];
+  orders &&
+    orders.forEach((item) => {
+      row.push({
+        id: item._id,
+        itemsQty: item.orderItems.length,
+        total: "US$" + item.totalPrice,
+        status: item.orderStatus,
+      });
+    });
+  return (
+    <div className="pl-8 pt-1">
+      <DataGrid
+        rows={row}
+        columns={columns}
+        pageSize={10}
+        disableSelectionOnClick
+        autoHeight
+      />
+    </div>
+  );
+};
+const PaymentMethods = () => {
+  return (
+    <div className="w-full px-5">
+      <div className="w-full flex justify-between items-center ">
+        <h1 className="font-semibold pb-2 text-2xl text-gray-800">
+          Payment Methods
+        </h1>
+        <div className={`${styles.button} !rounded-md`}>
+          <span className="text-white">Add New</span>
+        </div>
+      </div>
+      <br />
+      <div className="bg-white w-full h-[70px] flex items-center justify-between shadow px-3 pr-10">
+        <div className="flex items-center">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
+            alt=""
+            height="30px"
+            width="30px"
+          />
+        </div>
+        <h5 className="font-semibold pl-5">Sharjeel Memon</h5>
+        <div className="pl-8 flex items-center">
+          <h6 className="font-normal">123 **** *** ****</h6>
+          <div className="font-normal pl-6">08/2024</div>
+        </div>
+        <div className="min-w-[10%] flex items-center justify-between pl-8">
+          <AiOutlineDelete size={25} className="cursor-pointer" />
+        </div>
+      </div>
+    </div>
+  );
+};
+const AddressMethod = () => {
+  return (
+    <div className="w-full px-5">
+      <div className="w-full flex justify-between items-center ">
+        <h1 className="font-semibold pb-2 text-2xl text-gray-800">
+          My Addresses
+        </h1>
+        <div className={`${styles.button} !rounded-md`}>
+          <span className="text-white">Add New</span>
+        </div>
+      </div>
+      <br />
+      <div className="bg-white w-full h-[70px] flex items-center justify-between shadow px-3 pr-10">
+        <div className="flex items-center">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
+            alt=""
+            height="30px"
+            width="30px"
+          />
+        </div>
+        <h5 className="font-semibold pl-5">Default</h5>
+        <div className="pl-8 flex items-center">
+          <h6 className="font-normal">
+            494 Ed Street Block A, Edin road, London
+          </h6>
+        </div>
+        <div className="pl-8 flex items-center">
+          <h6 className="font-normal">(+92) 1234567890</h6>
+        </div>
+        <div className="min-w-[10%] flex items-center justify-between pl-8">
+          <AiOutlineDelete size={25} className="cursor-pointer" />
+        </div>
+      </div>
+    </div>
+  );
 };
 export default ProfileContent;

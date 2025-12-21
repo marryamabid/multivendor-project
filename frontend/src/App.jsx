@@ -17,8 +17,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import Store from "./redux/store.js";
 import { loadUser } from "./redux/actions/user.js";
+import { useSelector } from "react-redux";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 
 function App() {
+  const { loading, isAuthenticated } = useSelector((state) => state.user);
   useEffect(() => {
     Store.dispatch(loadUser());
   }, []);
@@ -61,7 +64,11 @@ function App() {
     },
     {
       path: "/profile",
-      element: <ProfilePage />,
+      element: (
+        <ProtectedRoute isAuthenticated={isAuthenticated}>
+          <ProfilePage />
+        </ProtectedRoute>
+      ),
     },
   ]);
   return (
