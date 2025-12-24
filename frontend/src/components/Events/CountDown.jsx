@@ -22,12 +22,12 @@ const CountDown = () => {
     }, 1000);
     return () => clearTimeout(timer);
   });
-  const timerComponents = Object.keys(timeLeft).map((interval) => {
+  const timerComponents = Object.keys(timeLeft).map((interval, index) => {
     if (!timeLeft[interval]) {
       return null;
     }
     return (
-      <span className="text-[25px] text-[#475ad2]">
+      <span className="text-[25px] text-[#475ad2]" key={index}>
         {timeLeft[interval]} {interval}{" "}
       </span>
     );

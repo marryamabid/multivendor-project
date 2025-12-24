@@ -1,5 +1,5 @@
-const sendShopToken = (user, statusCode, res) => {
-  const token = user.getJWTToken();
+const sendShopToken = (shop, statusCode, res) => {
+  const token = shop.getJWTToken();
   //options for cookie
   const options = {
     expires: new Date(
@@ -10,7 +10,7 @@ const sendShopToken = (user, statusCode, res) => {
   res.status(statusCode).cookie("shop_token", token, options).json({
     success: true,
     msg: "Account activated successfully!",
-    user,
+    shop,
     token,
   });
 };

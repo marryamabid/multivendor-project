@@ -1,5 +1,10 @@
 import "./App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+  useNavigate,
+} from "react-router-dom";
 import {
   LoginPage,
   SignupPage,
@@ -14,20 +19,30 @@ import {
   ShopCreatePage,
   ShopeActivationPage,
   ShopLoginPage,
+  ShopHomePage,
 } from "./Routes.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import Store from "./redux/store.js";
-import { loadUser } from "./redux/actions/user.js";
+import { loadUser, loadShop } from "./redux/actions/user.js";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./ProtectedRoute.jsx";
+import ProtectedShopRoute from "./ProtectedShopRoute.jsx";
 
 function App() {
-  const { loading, isAuthenticated } = useSelector((state) => state.user);
+  const { isLoading, isAuthenticated } = useSelector((state) => state.user);
+  const { isSeller, isSellerLoading, shop } = useSelector(
+    (state) => state.shop
+  );
+
   useEffect(() => {
     Store.dispatch(loadUser());
+    Store.dispatch(loadShop());
   }, []);
+  console.log("App - isSeller:", isSeller, shop);
+  console.log(shop);
+
   const routes = createBrowserRouter([
     {
       path: "/",
@@ -81,9 +96,21 @@ function App() {
       path: "/shop/activation/:activation_token",
       element: <ShopeActivationPage />,
     },
+
     {
       path: "/login-shop",
       element: <ShopLoginPage />,
+    },
+    {
+      path: "/shop/:shopid",
+      element: (
+        <ProtectedShopRoute
+          isSeller={isSeller}
+          isSellerLoading={isSellerLoading}
+        >
+          <ShopHomePage />
+        </ProtectedShopRoute>
+      ),
     },
     //  {
     //   path: "/checkout",
@@ -96,7 +123,10 @@ function App() {
   ]);
   return (
     <>
+      {(isSellerLoading || isLoading) && <div>Loading...</div>}
+
       <RouterProvider router={routes} />
+
       <ToastContainer
         position="bottom-center"
         autoClose={5000}

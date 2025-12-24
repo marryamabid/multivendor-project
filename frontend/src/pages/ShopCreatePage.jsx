@@ -1,20 +1,21 @@
+import ShopCreate from "../components/Shop/ShopCreate";
 import { useEffect } from "react";
-import ShopLogin from "../components/Shop/ShopLogin.jsx";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-const ShopLoginPage = () => {
-  const navigate = useNavigate();
+import { useNavigate } from "react-router-dom";
+const ShopCreatePage = () => {
   const { isSeller, shop } = useSelector((state) => state.shop);
-  console.log(isSeller, shop);
+  const navigate = useNavigate();
+  console.log(shop);
+
   useEffect(() => {
     if (isSeller === true) {
       navigate(`/shop/${shop._id}`);
     }
   }, [isSeller, shop, navigate]);
   return (
-    <>
-      <ShopLogin />
-    </>
+    <div>
+      <ShopCreate />
+    </div>
   );
 };
-export default ShopLoginPage;
+export default ShopCreatePage;

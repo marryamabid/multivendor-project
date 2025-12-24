@@ -8,7 +8,7 @@ import { server } from "../../server";
 const ShopLogin = () => {
   const [email, setEmail] = useState("");
   const [visible, setVisible] = useState(false);
-  const [password, setPaaword] = useState(false);
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -82,7 +82,7 @@ const ShopLogin = () => {
                     placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     required
                     onChange={(e) => {
-                      setPaaword(e.target.value);
+                      setPassword(e.target.value);
                     }}
                   />
                   {visible ? (

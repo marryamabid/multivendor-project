@@ -14,3 +14,18 @@ export const loadUser = () => async (dispatch) => {
     });
   }
 };
+
+export const loadShop = () => async (dispatch) => {
+  try {
+    dispatch({ type: "loadShopRequest" });
+    const { data } = await axios.get(`${server}/shop/getshop`, {
+      withCredentials: true,
+    });
+    dispatch({ type: "loadShopSuccess", payload: data.shop });
+  } catch (error) {
+    dispatch({
+      type: "loadShopFailure",
+      payload: error.response?.data?.message || error.message,
+    });
+  }
+};

@@ -10,7 +10,7 @@ const catchAsyncErrors = require("../middleware/catchAsynErrors");
 const sendToken = require("../utils/jwtToken");
 const router = express.Router();
 const sendShopToken = require("../utils/shopToken");
-const { isAuthenticatedUser } = require("../middleware/auth");
+const { isAuthenticatedShop } = require("../middleware/auth");
 router.post(
   "/create-shop",
   upload.upload.single("avatar"),
@@ -102,7 +102,7 @@ router.post(
       }
       const shop = await Shop.findOne({ email }).select("+password");
       if (!shop) {
-        return next(new ErrorHandler("User doesn't exist", 401));
+        return next(new ErrorHandler("Shop doesn't exist", 401));
       }
       const isPasswordValid = await shop.comparePassword(password);
 
@@ -112,7 +112,7 @@ router.post(
         );
       }
 
-      sendShopToken(shop, 201, res);
+      sendShopToken(shop, 200, res);
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }
@@ -121,12 +121,12 @@ router.post(
 //load shop
 router.get(
   "/getshop",
-  isAuthenticatedUser,
+  isAuthenticatedShop,
   catchAsyncErrors(async (req, res, next) => {
     try {
       const shop = await Shop.findById(req.shop.id);
       if (!shop) {
-        return next(new ErrorHandler("User not found", 404));
+        return next(new ErrorHandler("Shop not found", 404));
       }
       res.status(200).json({
         success: true,

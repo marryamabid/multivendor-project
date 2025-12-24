@@ -254,7 +254,7 @@ const ShopCreate = () => {
                 </button>
               </div>
               <div className={`${styles.noramlFlex} w-full`}>
-                <h4 className="">Already have an account </h4>
+                <h4 className="">Already have an account?</h4>
                 <Link
                   to="/login-shop"
                   className="text-medium text-blue-600 hover:text-blue-500 pl-2"
