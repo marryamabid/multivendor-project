@@ -9,7 +9,6 @@ const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const catchAsyncErrors = require("../middleware/catchAsynErrors");
 const sendToken = require("../utils/jwtToken");
-const { send } = require("process");
 const { isAuthenticatedUser } = require("../middleware/auth");
 
 router.post(

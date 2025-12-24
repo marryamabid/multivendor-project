@@ -11,6 +11,9 @@ import {
   FAQPage,
   ProductDetailsPage,
   ProfilePage,
+  ShopCreatePage,
+  ShopeActivationPage,
+  ShopLoginPage,
 } from "./Routes.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -70,6 +73,26 @@ function App() {
         </ProtectedRoute>
       ),
     },
+    {
+      path: "/shop-create",
+      element: <ShopCreatePage />,
+    },
+    {
+      path: "/shop/activation/:activation_token",
+      element: <ShopeActivationPage />,
+    },
+    {
+      path: "/login-shop",
+      element: <ShopLoginPage />,
+    },
+    //  {
+    //   path: "/checkout",
+    //   element: (
+    //     <ProtectedRoute isAuthenticated={isAuthenticated}>
+    //       <CheckoutPage />
+    //     </ProtectedRoute>
+    //   ),
+    // },
   ]);
   return (
     <>

@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { backend_url } from "../../server.js";
 import Cart from "../Cart/Cart.jsx";
 import WhishList from "../WhishList/WhishList.JSX";
+import { RxCross1 } from "react-icons/rx";
 
 export const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -28,6 +29,7 @@ export const Header = ({ activeHeading }) => {
   const [dropDown, setDropDown] = useState(false);
   const [openCart, setOpenCart] = useState(false);
   const [openWhishList, setOpenWhishList] = useState(false);
+  const [open, setOpen] = useState(false);
   const handleSearchChange = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
@@ -73,7 +75,7 @@ export const Header = ({ activeHeading }) => {
               {searchData && searchData.length > 0 && (
                 <div className="absolute w-full bg-slate-50 shadow-md z-[9] p-4 max-h-[30vh] overflow-y-auto">
                   {searchData.map((product) => (
-                    <Link key={product.id} to={`/product/${product.id}`}>
+                    <Link key={product.id} to={`/product/${product.name}`}>
                       <div className="w-full flex items-start py-3">
                         <img
                           src={product.image_Url[0]?.url}
@@ -87,8 +89,8 @@ export const Header = ({ activeHeading }) => {
                 </div>
               )}
             </div>
-            <div className={`${styles.button}`}>
-              <Link to="/seller">
+            <div className={`${styles.button} !rounded-md`}>
+              <Link to="/shop-create">
                 <h1 className="text-white flex  items-center ">
                   Become Seller
                   <IoIosArrowForward className="ml-1" />
@@ -99,14 +101,14 @@ export const Header = ({ activeHeading }) => {
         </div>
         <div
           className={`${
-            active ? "sticky top-0 z-10 shadow-sm" : ""
+            active === true ? "fixed left-0 top-0 z-50 shadow-sm" : null
           } transition flex items-center justify-between w-full bg-[#3321c8] h-[70px] px-4`}
         >
           {/* Categories */}
 
           <div onClick={() => setDropDown(!dropDown)}>
             <div className="relative flex items-center w-[270px] h-[60px]">
-              <BiMenuAltLeft size={30} className="absolute left-2" />
+              <BiMenuAltLeft size={30} className="absolute left-0 top-0 z-50" />
               <button className="flex-1 h-full pl-10 pr-8 bg-white rounded-t-md text-lg font-medium flex items-center justify-between">
                 All Categories
                 <IoIosArrowDown
@@ -172,7 +174,7 @@ export const Header = ({ activeHeading }) => {
                     to="/login"
                     className="text-[18px] pr-[10px] text-[#000000b7]"
                   >
-                    Login /
+                    Login/
                   </Link>
                   <Link to="/sign-up" className="text-[18px] text-[#000000b7]">
                     Sign up
@@ -190,7 +192,138 @@ export const Header = ({ activeHeading }) => {
         </div>
       </div>
       {/* mobile view */}
-      <div className="w-full h-[70px] bg-white shadow-sm z-50 top-0 left-0 md:hidden"></div>
+      <div
+        className={`${
+          active ? "fixed top-0 left-0 z-50 shadow-sm" : ""
+        } w-full h-[70px] bg-white shadow-sm  top-0 left-0 md:hidden`}
+      >
+        <div className="w-full flex items-center justify-between">
+          <div>
+            <BiMenuAltLeft
+              size={30}
+              className="ml-4"
+              onClick={() => setOpen(true)}
+            />
+          </div>
+          <Link to="/">
+            <img
+              src="https://shopo.quomodothemes.website/assets/images/logo.svg"
+              alt=""
+              className="cursor-pointer mt-3"
+            />
+          </Link>
+          <div>
+            <div className="mr-[20px] relative ">
+              <AiOutlineShoppingCart
+                size={30}
+                onClick={() => setOpenCart(true)}
+                className="cursor-pointer"
+              />
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 text-white text-[12px] rounded-full flex items-center justify-center">
+                1
+              </span>
+            </div>
+          </div>
+        </div>
+        {/* header sidebar */}
+        {open ? (
+          <div
+            className={` w-full fixed  z-20 top-0 left-0 bg-gray-950/40 h-screen`}
+          >
+            <div className="w-[60%] fixed bg-white z-20 top-0 left-0  h-screen ">
+              <div className="w-full flex justify-between items-center">
+                <div className="relative">
+                  <AiOutlineHeart size={30} className="mt-2 ml-5" />
+                  <span className="absolute top-0 right-0 w-4 h-4 bg-green-500 text-white text-[12px] rounded-full flex items-center justify-center">
+                    1
+                  </span>
+                </div>
+                <RxCross1
+                  className="mr-5 mt-5 cursor-pointer "
+                  size={30}
+                  onClick={() => setOpen(false)}
+                />
+              </div>
+              <div className="my06 w-[92%] mt-2 m-auto h-[40px] relative">
+                <input
+                  type="text"
+                  placeholder="Search Product..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                  className="h-[40px] w-full px-2 rounded-md border-[2px] border-blue-500"
+                />
+                {searchData && searchData.length > 0 && (
+                  <div className="absolute w-full bg-slate-50 shadow-md z-[9] p-4 max-h-[30vh] overflow-y-auto">
+                    {searchData.map((product) => {
+                      const d = product.name;
+                      const product_name = d.replace(/\s+/g, "-");
+                      return (
+                        <Link
+                          key={product.id}
+                          to={`/product/${product_name}`}
+                          onClick={() => {
+                            setOpen(true);
+                            setSearchData("");
+                            setSearchTerm("");
+                          }}
+                        >
+                          <div className="w-full flex items-start py-3">
+                            <img
+                              src={product.image_Url[0]?.url}
+                              alt={product.name}
+                              className="w-[40px] h-[40px] mr-[10px]"
+                            />
+                            <h1>{product.name}</h1>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+                <Navbar active={activeHeading} />
+                <div className={`${styles.button} ml-4 !rounded-md`}>
+                  <Link to="/shop-create">
+                    <h1 className="text-white flex  items-center ">
+                      Become Seller
+                      <IoIosArrowForward className="ml-1" />
+                    </h1>
+                  </Link>
+                </div>
+                <br />
+                <br />
+                <div className="flex items-center justify-center">
+                  {isAuthenticated ? (
+                    <div>
+                      <Link to="/profile">
+                        <img
+                          src={`${backend_url}${user.avatar}`}
+                          alt=""
+                          className="w-[60px] h-[60px] rounded-full border-[3px] border-[#0eae88]"
+                        />
+                      </Link>
+                    </div>
+                  ) : (
+                    <>
+                      <Link
+                        to="/login"
+                        className="text-[18px] pr-[10px] text-[#000000b7]"
+                      >
+                        Login/
+                      </Link>
+                      <Link
+                        to="/sign-up"
+                        className="text-[18px] text-[#000000b7]"
+                      >
+                        Sign up
+                      </Link>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
+      </div>
     </>
   );
 };

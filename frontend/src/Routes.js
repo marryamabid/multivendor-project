@@ -8,6 +8,9 @@ import EventsPage from "./pages/EventsPage.jsx";
 import FAQPage from "./pages/FAQPage.jsx";
 import ProductDetailsPage from "./pages/ProductDetailsPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
+import ShopCreatePage from "./pages/SopCreatePage.jsx";
+import ShopeActivationPage from "./pages/ShopActivationPage.jsx";
+import ShopLoginPage from "./pages/ShopLoginPage.jsx";
 export {
   LoginPage,
   SignupPage,
@@ -19,4 +22,7 @@ export {
   FAQPage,
   ProductDetailsPage,
   ProfilePage,
+  ShopCreatePage,
+  ShopeActivationPage,
+  ShopLoginPage,
 };

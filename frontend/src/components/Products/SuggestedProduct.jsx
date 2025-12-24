@@ -5,10 +5,11 @@ import ProductCard from "../../components/Route/ProductCard/ProductCard.jsx";
 const SuggestedProduct = ({ data }) => {
   const [product, setProduct] = useState(null);
   useEffect(() => {
-    const d =
-      productData && productData.filter((i) => i.category === data.category);
-    setProduct(d);
-  }, [product]);
+    if (data) {
+      const d = productData.filter((i) => i.category === data.category);
+      setProduct(d);
+    }
+  }, [data]);
   return (
     <>
       {data ? (
