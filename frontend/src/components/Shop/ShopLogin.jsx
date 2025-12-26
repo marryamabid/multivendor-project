@@ -23,8 +23,8 @@ const ShopLogin = () => {
       );
       console.log(res.data);
       toast.success("Login Successfull!");
-
-      navigate("/");
+      navigate("/dashboard");
+      window.location.reload(true);
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message || "Login failed");
