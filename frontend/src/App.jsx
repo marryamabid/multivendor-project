@@ -20,9 +20,8 @@ import {
   ShopeActivationPage,
   ShopLoginPage,
   ShopHomePage,
-  ShopDashboardPage,
 } from "./routes/Routes.js";
-
+import { ShopCreateProduct, ShopDashboardPage } from "./routes/ShopRoutes.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
@@ -109,6 +108,14 @@ function App() {
       element: (
         <ProtectedShopRoute>
           <ShopDashboardPage />
+        </ProtectedShopRoute>
+      ),
+    },
+    {
+      path: "/dashboard-create-product",
+      element: (
+        <ProtectedShopRoute>
+          <ShopCreateProduct />
         </ProtectedShopRoute>
       ),
     },

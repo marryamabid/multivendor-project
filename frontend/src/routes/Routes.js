@@ -12,7 +12,7 @@ import ShopCreatePage from "../pages/ShopCreatePage.jsx";
 import ShopeActivationPage from "../pages/ShopActivationPage.jsx";
 import ShopLoginPage from "../pages/ShopLoginPage.jsx";
 import ShopHomePage from "../pages/ShopHomePage.jsx";
-import ShopDashboardPage from "../pages/ShopDashboardPage.jsx";
+
 export {
   LoginPage,
   SignupPage,
@@ -28,5 +28,4 @@ export {
   ShopeActivationPage,
   ShopLoginPage,
   ShopHomePage,
-  ShopDashboardPage,
 };

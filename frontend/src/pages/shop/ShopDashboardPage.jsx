@@ -1,6 +1,6 @@
 import { useState } from "react";
-import DashboardHeader from "../components/Shop/Layout/Dashboard/DashboardHeader.jsx";
-import DashboardSideBar from "../components/Shop/Layout/Dashboard/DashboardSideBar.jsx";
+import DashboardHeader from "../../components/Shop/Layout/Dashboard/DashboardHeader.jsx";
+import DashboardSideBar from "../../components/Shop/Layout/Dashboard/DashboardSideBar.jsx";
 const ShopDashboardPage = () => {
   const [active, setActive] = useState(1);
   return (
