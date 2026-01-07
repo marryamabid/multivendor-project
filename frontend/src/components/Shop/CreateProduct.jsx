@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { categoriesData } from "../../static/data";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-
+import { createproduct } from "../../redux/actions/product";
+import { toast } from "react-toastify";
 const CreateProduct = () => {
   const { shop } = useSelector((state) => state.shop);
+  const { success, error } = useSelector((state) => state.product);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [images, setImages] = useState([]);
@@ -13,31 +15,27 @@ const CreateProduct = () => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState("");
-  const [originalPrice, setOriginalPrice] = useState();
-  const [discountPrice, setDiscountPrice] = useState();
-  const [stock, setStock] = useState();
-  //   useEffect(() => {
-  //     if (error) {
-  //       toast.error(error);
-  //     }
-  //     if (success) {
-  //       toast.success("Product created successfully!");
-  //       navigate("/dashboard");
-  //       window.location.reload();
-  //     }
-  //   }, [dispatch, error, success]);
+  const [originalPrice, setOriginalPrice] = useState("");
+  const [discountPrice, setDiscountPrice] = useState("");
+  const [stock, setStock] = useState("");
+  const [previewImages, setPreviewImages] = useState([]);
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+    if (success) {
+      toast.success("Product created successfully!");
+      navigate("/dashboard");
+      // window.location.reload();
+    }
+  }, [error, success]);
   const handleImageChange = (e) => {
-    // // const files = Array.from(e.target.files);
-    // // setImages([]);
-    // // files.forEach((file) => {
-    // //   const reader = new FileReader();
-    // //   reader.onload = () => {
-    // //     if (reader.readyState === 2) {
-    // //       setImages((old) => [...old, reader.result]);
-    // //     }
-    // //   };
-    // //   reader.readAsDataURL(file);
-    // });
+    console.log(e.target.files);
+
+    const files = Array.from(e.target.files);
+    setImages(files);
+    const preview = files.map((file) => URL.createObjectURL(file));
+    setPreviewImages(preview);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,33 +43,23 @@ const CreateProduct = () => {
     const newForm = new FormData();
 
     images.forEach((image) => {
-      newForm.set("images", image);
+      newForm.append("images", image);
     });
     newForm.append("name", name);
     newForm.append("description", description);
     newForm.append("category", category);
     newForm.append("tags", tags);
-    newForm.append("originalPrice", originalPrice);
-    newForm.append("discountPrice", discountPrice);
-    newForm.append("stock", stock);
-    newForm.append("shopId", seller._id);
-    // dispatch(
-    //   createProduct({
-    //     name,
-    //     description,
-    //     category,
-    //     tags,
-    //     originalPrice,
-    //     discountPrice,
-    //     stock,
-    //     shopId: seller._id,
-    //     images,
-    //   })
-    // );
+    newForm.append("originalPrice", Number(originalPrice));
+    newForm.append("discountPrice", Number(discountPrice));
+    newForm.append("stock", Number(stock));
+    newForm.append("shopId", shop._id);
+    console.log(newForm);
+
+    dispatch(createproduct(newForm));
   };
   return (
     <>
-      <div className="w-[90%] 800px:w-[50%] bg-white  shadow h-[80vh] rounded-[4px] p-3 overflow-y-scroll">
+      <div className="w-full md:w-[70%] bg-white shadow rounded-md p-3 mt-9 max-h-[200vh] overflow-y-auto">
         <h5 className="text-[30px] font-Poppins text-center">Create Product</h5>
         <form onSubmit={handleSubmit}>
           <br />
@@ -83,7 +71,7 @@ const CreateProduct = () => {
               type="text"
               name="name"
               value={name}
-              className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-2 appearance-none focus:ring-2 block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your product name..."
             />
@@ -100,7 +88,7 @@ const CreateProduct = () => {
               type="text"
               name="description"
               value={description}
-              className="mt-2 appearance-none block w-full pt-2 px-3 border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-2 appearance-none focus:ring-2 block w-full pt-2 px-3 border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Enter your product description..."
             ></textarea>
@@ -131,7 +119,7 @@ const CreateProduct = () => {
               type="text"
               name="tags"
               value={tags}
-              className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-2 focus:ring-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               onChange={(e) => setTags(e.target.value)}
               placeholder="Enter your product tags..."
             />
@@ -143,7 +131,7 @@ const CreateProduct = () => {
               type="number"
               name="price"
               value={originalPrice}
-              className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-2 focus:ring-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               onChange={(e) => setOriginalPrice(e.target.value)}
               placeholder="Enter your product price..."
             />
@@ -157,7 +145,7 @@ const CreateProduct = () => {
               type="number"
               name="price"
               value={discountPrice}
-              className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-2 focus:ring-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               onChange={(e) => setDiscountPrice(e.target.value)}
               placeholder="Enter your product price with discount..."
             />
@@ -171,7 +159,7 @@ const CreateProduct = () => {
               type="number"
               name="price"
               value={stock}
-              className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-2 focus:ring-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               onChange={(e) => setStock(e.target.value)}
               placeholder="Enter your product stock..."
             />
@@ -185,7 +173,7 @@ const CreateProduct = () => {
               type="file"
               name="images"
               id="upload"
-              className="hidden"
+              className="hidden "
               multiple
               onChange={handleImageChange}
             />
@@ -193,22 +181,21 @@ const CreateProduct = () => {
               <label htmlFor="upload">
                 <AiOutlinePlusCircle size={30} className="mt-3" color="#555" />
               </label>
-              {images &&
-                images.map((i) => (
-                  <img
-                    src={i}
-                    key={i}
-                    alt=""
-                    className="h-[120px] w-[120px] object-cover m-2"
-                  />
-                ))}
+              {previewImages.map((img, idx) => (
+                <img
+                  key={idx}
+                  src={img}
+                  alt=""
+                  className="h-[120px] w-[120px] object-cover m-2"
+                />
+              ))}
             </div>
             <br />
             <div>
               <input
                 type="submit"
                 value="Create"
-                className="mt-2 cursor-pointer appearance-none text-center block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="mt-2 focus:ring-2 cursor-pointer appearance-none text-center block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
           </div>

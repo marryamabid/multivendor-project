@@ -6,11 +6,11 @@ const ShopCreateProduct = () => {
   return (
     <div>
       <DashboardHeader />
-      <div className="flex items-center justify-between w-full">
-        <div className="w-[80px] 800px:w-[330px]">
+      <div className="flex w-full">
+        <div className="w-[20%] min-h-screen ">
           <DashboardSideBar active={4} />
         </div>
-        <div className="w-full justify-center flex">
+        <div className="w-[80%] justify-center flex">
           <CreateProduct />
         </div>
       </div>

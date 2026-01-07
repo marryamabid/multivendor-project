@@ -6,10 +6,10 @@ const ShopDashboardPage = () => {
   return (
     <>
       <DashboardHeader />
-      <div className="w-full flex items-center justify-between ">
-        <div className="w-[336px]">
+      <div className="w-full  ">
+        <div className="w-[20%] min-h-screen">
           {/* Sidebar can be added here */}
-          <DashboardSideBar active={1} />
+          <DashboardSideBar active={active} />
         </div>
       </div>
     </>
